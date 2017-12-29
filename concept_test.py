@@ -27,7 +27,7 @@ def func(sequence):
     return result
 
 sequence=sequence.translate(string.maketrans("","")," \n")
-#sequence=sequence.replace("\n","")
+#cleans up unwanted white spaces and new lines. When collecting from file, use readlines()
 
 result=func(sequence)
 
