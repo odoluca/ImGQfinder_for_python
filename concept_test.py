@@ -1,13 +1,21 @@
 #inspired by ImGQfinder algorithm at http://imgqfinder.niifhm.ru/algorithm/
 import re
 import regex
-sequence="TTTGGGTTTTTGTGGTTTGGGTTTTTGGGTTTGGTGTTTTTGtGG"
+sequence="TTTGGGTTTTTGTGGTTTGGGTTTTTGGGTTTGGTGTTTTTGTGG"
 
-prog=regex.Regex(r"""( [G]{3,} | (?P<mis>[G]{1,}[ATC][G]{1,})) ( \w{1,7} (?(mis)[G]{3,} | (?P<mis>[G]{1,}[ATC][G]{1,}) )){3,} """,regex.VERBOSE|regex.MULTILINE)
+G3_PMB_greedy_pattern=r"""( [G]{3,} | (?P<mis>[G]{1,}[ATC][G]{1,})) ( \w{1,7} (?(mis)[G]{3,} | (?P<mis>[G]{1,}[ATC][G]{1,}) )){3,} """
+G3_PB_greedy_pattern=r"""( [G]{3,} | (?P<mis>([G]{2,}[ATC][G]{1,}|[G]{1,}[ATC][G]{2,}))) ( \w{1,7} (?(mis)[G]{3,} | (?P<mis>([G]{2,}[ATC][G]{1,}|[G]{1,}[ATC][G]{2,})) )){3,} """
+
+G3_PMB_nongreedy_pattern=r"""( [G]{3,} | (?P<mis>[G]{1,}[ATC][G]{1,})) ( \w{1,7} (?(mis)[G]{3,} | (?P<mis>[G]{1,}[ATC][G]{1,}) )){3} """
+G3_PB_nongreedy_pattern=r"""( [G]{3,} | (?P<mis>([G]{2,}[ATC][G]{1,}|[G]{1,}[ATC][G]{2,}))) ( \w{1,7} (?(mis)[G]{3,} | (?P<mis>([G]{2,}[ATC][G]{1,}|[G]{1,}[ATC][G]{2,})) )){3} """
+
+
+
+prog=regex.Regex(G3_PMB_greedy_pattern,regex.VERBOSE|regex.MULTILINE)
 #finds all perfect, mismatched or buldged imperfect pG4s
 
 
-prog=regex.Regex(r"""( [G]{3,} | (?P<mis>([G]{2,}[ATC][G]{1,}|[G]{1,}[ATC][G]{2,}))) ( \w{1,7} (?(mis)[G]{3,} | (?P<mis>([G]{2,}[ATC][G]{1,}|[G]{1,}[ATC][G]{2,})) )){3,} """,regex.VERBOSE|regex.MULTILINE)
+prog=regex.Regex(G3_PB_greedy_pattern,regex.VERBOSE|regex.MULTILINE)
 #finds both perfect or bulged imperfect pG4s.
 
 
